@@ -1,12 +1,26 @@
 from fastapi import FastAPI
 from typing import Optional
 from enum import Enum
+from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI()
+
+# backend run fastapi dev main.py
+# ?frontend run - pnpm dev 
+
 
 class order_by(str,Enum):
     asc = "asc"
     desc = "desc"
+
+app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins = ["http://localhost:5173"],
+    allow_methods=["*"],
+    allow_headers = ["*"],
+    allow_credentials = True 
+)
 
 
 @app.get("/")
