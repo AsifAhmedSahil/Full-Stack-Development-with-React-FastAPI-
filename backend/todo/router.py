@@ -1,6 +1,7 @@
 from fastapi import APIRouter,Response,status
 from utils.dummy import dummy_data,order_by
 from typing import Optional
+from .schema import Todo,Todo_request
 
 router = APIRouter(
     prefix="/todo",
@@ -28,3 +29,10 @@ async def item(id:int,response:Response):
     return {"item":f'the number of item is {id}'}
 
 
+@router.post("/new_todo",response_model=Todo)
+async def new_todo(todo:Todo_request):
+    return {
+        "id":420,
+        # aikhane ** holo js er spread operator er moto kaj kore , r pydantic model use kroar karone aita automatic conversion kore na tai model_dump() use kora hoise.
+        **todo.model_dump()
+    }
