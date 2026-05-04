@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter,Response,status
 from utils.dummy import dummy_data,order_by
 from typing import Optional
 
@@ -21,7 +21,10 @@ async def all_item(order : order_by = None):
 
 # ## duyamic path k niche rakhte hbe nahoi er niche same static path asle kaj korbe na, fastapi er default behaviour aita serially execute kore api
 @router.get("/item/{id}")
-async def item(id:int):
+async def item(id:int,response:Response):
+    if id > 5:
+        response.status_code = status.HTTP_404_NOT_FOUND   
+        return {"error":"item not found"}
     return {"item":f'the number of item is {id}'}
 
 
